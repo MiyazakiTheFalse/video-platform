@@ -23,3 +23,4 @@ src\components\LoginForm.jsx
 [39m[22m
 
 webpack compiled with [1m[33m1 warning[39m[22m
+(node:18040) [DEP0060] DeprecationWarning: The `util._extend` API is deprecated. Please use Object.assign() instead.

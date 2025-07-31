@@ -21,7 +21,6 @@ function AppRoutes() {
 
   return (
     <>
-      <Navbar />
       <Routes>
         <Route path="/login" element={!user ? <LoginForm /> : <Navigate to="/upload" replace />} />
         <Route path="/register" element={!user ? <RegisterForm /> : <Navigate to="/upload" replace />} />
@@ -46,10 +45,12 @@ function App() {
   return (
     <AuthProvider>
       <Router>
+        <Navbar />
         <AppRoutes />
       </Router>
     </AuthProvider>
   );
 }
+
 
 export default App;
