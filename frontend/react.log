@@ -24,3 +24,143 @@ src\components\LoginForm.jsx
 
 webpack compiled with [1m[33m1 warning[39m[22m
 (node:18040) [DEP0060] DeprecationWarning: The `util._extend` API is deprecated. Please use Object.assign() instead.
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src\App.jsx
+  Line 1:8:  'Raeact' is defined but never used  no-unused-vars
+
+src\components\LoginForm.jsx
+  Line 16:13:  'response' is assigned a value but never used  no-unused-vars
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+[1m[33mWARNING[39m[22m in [1m[eslint] 
+src\App.jsx
+  Line 1:8:  'Raeact' is defined but never used  no-unused-vars
+
+src\components\LoginForm.jsx
+  Line 16:13:  'response' is assigned a value but never used  no-unused-vars
+
+[39m[22m
+
+webpack compiled with [1m[33m1 warning[39m[22m
+Compiling...
+Failed to compile.
+
+[eslint] 
+src\App.jsx
+Syntax error: Identifier 'useContext' has already been declared. (8:16) (8:16)
+[1m[33mWARNING[39m[22m in [1m[eslint] 
+src\components\LoginForm.jsx
+  Line 16:13:  'response' is assigned a value but never used  no-unused-vars
+
+[39m[22m
+
+[1m[31mERROR[39m[22m in [1m./src/App.jsx[39m[22m
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: C:\Users\Elliot\video_platform\frontend\src\App.jsx: Identifier 'useContext' has already been declared. (8:16)
+
+[0m [90m  6 |[39m [36mimport[39m [33mLoginForm[39m [36mfrom[39m [32m'./components/LoginForm'[39m[33m;[39m
+ [90m  7 |[39m [36mimport[39m [33mRegisterForm[39m [36mfrom[39m [32m'./components/RegisterForm'[39m[33m;[39m
+[31m[1m>[22m[39m[90m  8 |[39m [36mimport[39m [33mReact[39m[33m,[39m { useContext } [36mfrom[39m [32m'react'[39m[33m;[39m
+ [90m    |[39m                 [31m[1m^[22m[39m
+ [90m  9 |[39m [36mimport[39m { [33mBrowserRouter[39m [36mas[39m [33mRouter[39m[33m,[39m [33mRoutes[39m[33m,[39m [33mRoute[39m[33m,[39m [33mNavigate[39m } [36mfrom[39m [32m'react-router-dom'[39m[33m;[39m
+ [90m 10 |[39m
+ [90m 11 |[39m [36mimport[39m { [33mAuthProvider[39m[33m,[39m [33mAuthContext[39m } [36mfrom[39m [32m'./context/AuthContext'[39m[33m;[39m[0m
+    at constructor (C:\Users\Elliot\video_platform\frontend\node_modules\@babel\parser\lib\index.js:367:19)
+    at FlowParserMixin.raise (C:\Users\Elliot\video_platform\frontend\node_modules\@babel\parser\lib\index.js:6627:19)
+    at FlowScopeHandler.checkRedeclarationInScope (C:\Users\Elliot\video_platform\frontend\node_modules\@babel\parser\lib\index.js:1644:19)
+    at FlowScopeHandler.declareName (C:\Users\Elliot\video_platform\frontend\node_modules\@babel\parser\lib\index.js:1610:12)
+    at FlowScopeHandler.declareName (C:\Users\Elliot\video_platform\frontend\node_modules\@babel\parser\lib\index.js:1711:11)
+    at FlowParserMixin.declareNameFromIdentifier (C:\Users\Elliot\video_platform\frontend\node_modules\@babel\parser\lib\index.js:7591:16)
+    at FlowParserMixin.checkIdentifier (C:\Users\Elliot\video_platform\frontend\node_modules\@babel\parser\lib\index.js:7587:12)
+    at FlowParserMixin.checkLVal (C:\Users\Elliot\video_platform\frontend\node_modules\@babel\parser\lib\index.js:7526:12)
+    at FlowParserMixin.finishImportSpecifier (C:\Users\Elliot\video_platform\frontend\node_modules\@babel\parser\lib\index.js:14266:10)
+    at FlowParserMixin.parseImportSpecifier (C:\Users\Elliot\video_platform\frontend\node_modules\@babel\parser\lib\index.js:3486:17)
+    at FlowParserMixin.parseNamedImportSpecifiers (C:\Users\Elliot\video_platform\frontend\node_modules\@babel\parser\lib\index.js:14402:36)
+    at FlowParserMixin.parseImportSpecifiersAndAfter (C:\Users\Elliot\video_platform\frontend\node_modules\@babel\parser\lib\index.js:14242:37)
+    at FlowParserMixin.parseImport (C:\Users\Elliot\video_platform\frontend\node_modules\@babel\parser\lib\index.js:14235:17)
+    at FlowParserMixin.parseStatementContent (C:\Users\Elliot\video_platform\frontend\node_modules\@babel\parser\lib\index.js:12876:27)
+    at FlowParserMixin.parseStatementLike (C:\Users\Elliot\video_platform\frontend\node_modules\@babel\parser\lib\index.js:12767:17)
+    at FlowParserMixin.parseStatementLike (C:\Users\Elliot\video_platform\frontend\node_modules\@babel\parser\lib\index.js:2946:24)
+    at FlowParserMixin.parseModuleItem (C:\Users\Elliot\video_platform\frontend\node_modules\@babel\parser\lib\index.js:12744:17)
+    at FlowParserMixin.parseBlockOrModuleBlockBody (C:\Users\Elliot\video_platform\frontend\node_modules\@babel\parser\lib\index.js:13316:36)
+    at FlowParserMixin.parseBlockBody (C:\Users\Elliot\video_platform\frontend\node_modules\@babel\parser\lib\index.js:13309:10)
+    at FlowParserMixin.parseProgram (C:\Users\Elliot\video_platform\frontend\node_modules\@babel\parser\lib\index.js:12625:10)
+    at FlowParserMixin.parseTopLevel (C:\Users\Elliot\video_platform\frontend\node_modules\@babel\parser\lib\index.js:12615:25)
+    at FlowParserMixin.parseTopLevel (C:\Users\Elliot\video_platform\frontend\node_modules\@babel\parser\lib\index.js:3715:28)
+    at FlowParserMixin.parse (C:\Users\Elliot\video_platform\frontend\node_modules\@babel\parser\lib\index.js:14492:10)
+    at parse (C:\Users\Elliot\video_platform\frontend\node_modules\@babel\parser\lib\index.js:14526:38)
+    at parser (C:\Users\Elliot\video_platform\frontend\node_modules\@babel\core\lib\parser\index.js:41:34)
+    at parser.next (<anonymous>)
+    at normalizeFile (C:\Users\Elliot\video_platform\frontend\node_modules\@babel\core\lib\transformation\normalize-file.js:64:37)
+    at normalizeFile.next (<anonymous>)
+    at run (C:\Users\Elliot\video_platform\frontend\node_modules\@babel\core\lib\transformation\index.js:22:50)
+    at run.next (<anonymous>)
+    at transform (C:\Users\Elliot\video_platform\frontend\node_modules\@babel\core\lib\transform.js:22:33)
+    at transform.next (<anonymous>)
+    at step (C:\Users\Elliot\video_platform\frontend\node_modules\gensync\index.js:261:32)
+    at C:\Users\Elliot\video_platform\frontend\node_modules\gensync\index.js:273:13
+    at async.call.result.err.err (C:\Users\Elliot\video_platform\frontend\node_modules\gensync\index.js:223:11)
+
+[1m[31mERROR[39m[22m in [1m[eslint] 
+src\App.jsx
+  Line 8:16:  Parsing [1m[31merror[39m[22m[1m: Identifier 'useContext' has already been declared. (8:16)
+
+[39m[22m
+
+webpack compiled with [1m[31m2 errors[39m[22m and [1m[33m1 warning[39m[22m
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src\components\LoginForm.jsx
+  Line 16:13:  'response' is assigned a value but never used  no-unused-vars
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+[1m[33mWARNING[39m[22m in [1m[eslint] 
+src\components\LoginForm.jsx
+  Line 16:13:  'response' is assigned a value but never used  no-unused-vars
+
+[39m[22m
+
+webpack compiled with [1m[33m1 warning[39m[22m
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src\components\LoginForm.jsx
+  Line 16:13:  'response' is assigned a value but never used  no-unused-vars
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+[1m[33mWARNING[39m[22m in [1m[eslint] 
+src\components\LoginForm.jsx
+  Line 16:13:  'response' is assigned a value but never used  no-unused-vars
+
+[39m[22m
+
+webpack compiled with [1m[33m1 warning[39m[22m
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src\components\LoginForm.jsx
+  Line 16:13:  'response' is assigned a value but never used  no-unused-vars
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+[1m[33mWARNING[39m[22m in [1m[eslint] 
+src\components\LoginForm.jsx
+  Line 16:13:  'response' is assigned a value but never used  no-unused-vars
+
+[39m[22m
+
+webpack compiled with [1m[33m1 warning[39m[22m

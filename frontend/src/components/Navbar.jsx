@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import LogoutButton from './LogoutButton';
+import { AuthContext } from '../context/AuthContext';
 
 function Navbar() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const { user, loading } = useContext(AuthContext);
 
-  useEffect(() => {
-    const token = localStorage.getItem('authToken');
-    setLoggedIn(!!token);
-  }, []);
+  if (loading) return null; // or a spinner if you want
 
   return (
     <nav style={{ 
@@ -21,8 +19,9 @@ function Navbar() {
         </Link>
       </div>
       <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-        {loggedIn ? (
+        {user ? (
           <>
+            <span>Welcome, {user.username}</span>
             <Link to="/upload" style={{ color: 'white', textDecoration: 'none' }}>
               Upload
             </Link>

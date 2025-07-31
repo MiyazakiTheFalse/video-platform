@@ -6,6 +6,7 @@ export default function UploadForm() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState('');
+  const [progress, setProgress] = useState(0);
 
   const handleFileChange = (e) => {
     setVideoFile(e.target.files[0]);
@@ -34,15 +35,21 @@ export default function UploadForm() {
           'Content-Type': 'multipart/form-data',
         },
         withCredentials: true, // send cookies for auth session
+        onUploadProgress: (progressEvent) => {
+          const percent = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+          setProgress(percent);
+        },
       });
       setStatus(`Upload successful! Video ID: ${res.data.video_id}`);
+      setProgress(0);
       setVideoFile(null);
       setTitle('');
       setDescription('');
     } catch (err) {
-      setStatus(
-        err.response?.data?.error || 'Upload failed, please try again.'
-      );
+      setStatus(err.response?.data?.error || 'Upload failed, please try again.');
+      setProgress(0);
     }
   };
 
@@ -79,6 +86,11 @@ export default function UploadForm() {
       <br />
 
       <button type="submit">Upload</button>
+
+      {progress > 0 && progress < 100 && (
+        <p>Upload Progress: {progress}%</p>
+      )}
+
       <p>{status}</p>
     </form>
   );
