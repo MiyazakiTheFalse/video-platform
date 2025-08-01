@@ -3,12 +3,14 @@ from dotenv import load_dotenv
 from flask import Flask
 from flask_login import LoginManager
 from flask_cors import CORS
+from flask_migrate import Migrate
+from backend.extensions import csrf
 
 from backend.models.user import User, db
 from backend.routes.auth import auth_bp
 from backend.routes.upload import upload_bp
-from flask_wtf.csrf import CSRFProtect
-
+from backend.models.video import Video
+from backend.routes.videos import videos_bp
 load_dotenv()
 
 app = Flask(__name__)
@@ -23,11 +25,11 @@ app.config.update(
     SESSION_COOKIE_SAMESITE='Lax',
 )
 
-csrf = CSRFProtect()
 csrf.init_app(app)  # Enable CSRF globally
 
 CORS(app)
 db.init_app(app)
+migrate = Migrate(app, db)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -40,8 +42,7 @@ def load_user(user_id):
 # Register blueprints after extensions are initialized
 app.register_blueprint(auth_bp)
 app.register_blueprint(upload_bp)
+app.register_blueprint(videos_bp)
 
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-    app.run(debug=True)
+    app.run(ssl_context=('cert.pem', 'key.pem'), debug=True)

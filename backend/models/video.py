@@ -10,3 +10,8 @@ class Video(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     uploader = db.relationship('User', backref=db.backref('videos', lazy=True))
+
+    processed_1080p = db.Column(db.String(255), nullable=True)
+    processed_720p = db.Column(db.String(255), nullable=True)
+    processed_480p = db.Column(db.String(255), nullable=True)
+    thumbnail = db.Column(db.String(255), nullable=True)

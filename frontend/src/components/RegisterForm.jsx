@@ -2,6 +2,15 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 
+
+// Add this just once, at the top level of the component file (outside the component)
+axios.interceptors.request.use(config => {
+  console.log('Axios request:', config.method, config.url, config.headers, config.data);
+  return config;
+}, error => {
+  return Promise.reject(error);
+});
+
 function RegisterForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -19,7 +28,15 @@ function RegisterForm() {
     }
 
     try {
-      await axios.post('/register', { email, password });
+      await axios.post('/register', {
+        email,
+        password
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
       // On successful registration, redirect to login
       navigate('/login');
     } catch (err) {

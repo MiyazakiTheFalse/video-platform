@@ -4,6 +4,8 @@ from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 from backend.models.video import Video
 from backend.models.user import db
+from backend.utils.transcode import transcode_to_resolutions
+import threading  # for async call, optional
 
 upload_bp = Blueprint('upload', __name__)
 

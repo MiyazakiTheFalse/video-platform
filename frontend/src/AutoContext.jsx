@@ -7,28 +7,24 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchUser = async () => {
-    try {
-      const res = await axios.get('/me', { withCredentials: true });
-      setUser(res.data);
-    } catch {
-      setUser(null);
-    } finally {
-      setLoading(false);
-    }
-  };
-
+  // Check current user on app start
   useEffect(() => {
-    fetchUser();
+    axios.get('/me', { withCredentials: true })
+      .then(res => {
+        setUser(res.data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setUser(null);
+        setLoading(false);
+      });
   }, []);
 
-  const logout = async () => {
-    await axios.post('/logout', { }, { withCredentials: true });
-    setUser(null);
-  };
+  const login = (userData) => setUser(userData);
+  const logout = () => setUser(null);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, loading, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
