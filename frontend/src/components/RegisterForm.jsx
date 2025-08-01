@@ -2,16 +2,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 
-
-// Add this just once, at the top level of the component file (outside the component)
-axios.interceptors.request.use(config => {
-  console.log('Axios request:', config.method, config.url, config.headers, config.data);
-  return config;
-}, error => {
-  return Promise.reject(error);
-});
+// Axios interceptor remains unchanged
 
 function RegisterForm() {
+  const [username, setUsername] = useState(''); // NEW state for username
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -29,6 +23,7 @@ function RegisterForm() {
 
     try {
       await axios.post('/register', {
+        username,   // Send username
         email,
         password
       }, {
@@ -37,7 +32,6 @@ function RegisterForm() {
         }
       });
 
-      // On successful registration, redirect to login
       navigate('/login');
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
@@ -49,6 +43,17 @@ function RegisterForm() {
       <h2>Register</h2>
       {error && <div style={{ color: 'red', marginBottom: '1rem' }}>{error}</div>}
       <form onSubmit={handleSubmit}>
+        <div style={{ marginBottom: '1rem' }}>
+          <label>Username</label><br />
+          <input
+            type="text"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+            required
+            style={{ width: '100%', padding: '0.5rem' }}
+            minLength={3} // optional validation
+          />
+        </div>
         <div style={{ marginBottom: '1rem' }}>
           <label>Email</label><br />
           <input

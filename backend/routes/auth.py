@@ -16,14 +16,18 @@ def get_csrf_token():
 @csrf.exempt  # Temporarily disabled until frontend handles CSRF properly
 def register():
     data = request.json
-    if not data or not data.get("email") or not data.get("password"):
-        return jsonify({"error": "Missing data"}), 400
+    username = data.get("username")
+    email = data.get("email")
+    password = data.get("password")
 
-    if User.query.filter_by(email=data["email"]).first():
-        return jsonify({"error": "Email already registered"}), 400
+    if not username or not email or not password:
+        return jsonify({"error": "Missing username, email or password"}), 400
 
-    hashed_pw = generate_password_hash(data["password"], method="sha256")
-    user = User(email=data["email"], password=hashed_pw)
+    if User.query.filter((User.username == username) | (User.email == email)).first():
+        return jsonify({"error": "Username or email already registered"}), 400
+
+    hashed_pw = generate_password_hash(password, method="pbkdf2:sha256", salt_length=16)
+    user = User(username=username, email=email, password=hashed_pw)
     db.session.add(user)
     db.session.commit()
     return jsonify({"message": "User registered"})
