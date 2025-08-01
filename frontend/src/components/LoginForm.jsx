@@ -1,6 +1,14 @@
-import React, { useState } from 'react';
+// LoginForm.jsx
+
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+
+// Debug all Axios requests
+axios.interceptors.request.use(config => {
+  console.log('[Axios Request]', config.method.toUpperCase(), config.url, config.data);
+  return config;
+}, error => Promise.reject(error));
 
 function LoginForm() {
   const [email, setEmail] = useState('');
@@ -8,23 +16,64 @@ function LoginForm() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  // Optional: check session on mount
+  useEffect(() => {
+    axios.get('https://localhost:5000/me', {
+      withCredentials: true,
+    })
+    .then(res => {
+      console.log("Already logged in as:", res.data);
+      navigate('/upload');
+    })
+    .catch(err => {
+      console.warn("Not logged in:", err.response?.status || err.message);
+    });
+  }, [navigate]);
+
+  const getCSRFToken = () => {
+    const match = document.cookie.match(/csrf_token=([^;]+)/);
+    return match ? match[1] : '';
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
     try {
-      const response = await axios.post('/login', { email, password }, { withCredentials: true });
-      localStorage.setItem('authToken', 'true');
-      navigate('/upload');
+      const csrfToken = getCSRFToken();
 
-      // Assuming backend sets session cookie or returns a token
-      // If token returned, store it like:
-      // localStorage.setItem('authToken', response.data.token);
-      
-      // For now, just assume login success if no error:
-      navigate('/upload');
+      // Step 1: Login request
+      await axios.post(
+        'https://localhost:5000/login',
+        { email, password },
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken,
+          },
+        }
+      );
+
+      // Step 2: Wait briefly to allow session cookie to propagate
+      setTimeout(async () => {
+        try {
+          const meResponse = await axios.get('https://localhost:5000/me', {
+            withCredentials: true,
+          });
+
+          console.log("Logged in as:", meResponse.data);
+          localStorage.setItem('authToken', 'true');
+          navigate('/upload');
+        } catch (verifyErr) {
+          console.error("Login succeeded but session not recognized:", verifyErr);
+          setError("Login succeeded, but session check failed.");
+        }
+      }, 300); // 300ms delay often resolves propagation issues
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed');
+      const msg = err?.response?.data?.message || 'Login failed';
+      setError(msg);
+      console.warn("Login error:", err);
     }
   };
 

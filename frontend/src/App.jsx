@@ -1,18 +1,20 @@
 import React, { useContext } from 'react';
+import axios from 'axios';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 import Navbar from './components/Navbar';
 import UploadForm from './components/UploadForm';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
-import VideoPlayer from './components/VideoPlayer'; // ✅ NEW component for dynamic video route
+import VideoPlayer from './components/VideoPlayer';
 
 import { AuthProvider, AuthContext } from './context/AuthContext';
 
-// Optional: Home component if you plan to show a landing page or feed
-// import Home from './components/Home'; 
+// Set axios defaults at the very top:
+axios.defaults.baseURL = 'https://localhost:5000';
+axios.defaults.withCredentials = true; // send cookies with requests
 
-// ✅ A wrapper to protect routes based on real auth state
+// PrivateRoute wrapper based on auth state
 function PrivateRoute({ children }) {
   const { user, loading } = useContext(AuthContext);
   if (loading) return <div>Loading...</div>;
@@ -37,7 +39,6 @@ function AppRoutes() {
         }
       />
 
-      {/* ✅ NEW: Route for dynamic video playback */}
       <Route
         path="/videos/:videoId"
         element={
@@ -47,7 +48,6 @@ function AppRoutes() {
         }
       />
 
-      {/* Default fallback route */}
       <Route
         path="/"
         element={user ? <Navigate to="/upload" replace /> : <Navigate to="/login" replace />}

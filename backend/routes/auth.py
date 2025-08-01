@@ -32,14 +32,26 @@ def register():
     db.session.commit()
     return jsonify({"message": "User registered"})
 
-@auth_bp.route('/login', methods=['POST'])
+@auth_bp.route('/login', methods=['GET', 'POST'])
+@csrf.exempt  # or properly handle CSRF token here
 def login():
-    data = request.json
-    user = User.query.filter_by(email=data['email']).first()
-    if not user or not check_password_hash(user.password, data['password']):
+    if request.method == 'GET':
+        return jsonify({"message": "Use POST to login"}), 200
+    
+    data = request.json or {}
+    email = data.get('email')
+    password = data.get('password')
+
+    if not email or not password:
+        return jsonify({'message': 'Email and password required'}), 400
+
+    user = User.query.filter_by(email=email).first()
+    if not user or not check_password_hash(user.password, password):
         return jsonify({'message': 'Invalid credentials'}), 401
+    
     login_user(user)
     return jsonify({'message': 'Login successful'})
+
 
 @auth_bp.route('/logout', methods=['POST'])
 @login_required
@@ -49,9 +61,9 @@ def logout():
 
 @auth_bp.route('/me', methods=['GET'])
 @login_required
-def me():
+def get_me():
     return jsonify({
-        'username': current_user.username,
+        'id': current_user.id,
         'email': current_user.email,
-        'is_admin': current_user.is_admin
+        'username': current_user.username
     })
